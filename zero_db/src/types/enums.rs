@@ -1,7 +1,8 @@
-use anyhow::{anyhow, Result};
 use crate::types::row::Row;
 use crate::types::statement::Statement;
+use anyhow::{anyhow, Result};
 
+#[derive(Debug, PartialEq)]
 pub enum MetaCommand {
     Exit,
 }
@@ -19,6 +20,7 @@ impl MetaCommand {
     }
 }
 
+#[derive(Debug)]
 pub enum PrepareResult {
     Success(Statement),
     SyntaxError(String),
@@ -36,7 +38,26 @@ pub enum ExecuteResult {
     ExecutionFailure(ExecutionFailure),
 }
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 pub enum StatementType {
     Insert,
     Select,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    pub fn test_meta_command_from_str_exit() {
+        assert_eq!(MetaCommand::Exit, MetaCommand::from_str("exit").unwrap());
+    }
+    
+    #[test]
+    pub fn test_meta_command_from_str_invalid() {
+        let result: Result<MetaCommand> = MetaCommand::from_str("");
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err().to_string(), "Invalid meta-command");
+    }
 }

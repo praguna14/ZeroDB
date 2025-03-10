@@ -10,3 +10,14 @@ impl Row {
         size_of::<i32>() + size_of::<HeapLessString<32>>() + size_of::<HeapLessString<256>>()
     }
 }
+
+#[cfg(test)]
+pub mod tests {
+    use super::*;
+
+    #[test]
+    fn test_row_max_size() {
+        let total = size_of::<i32>() + size_of::<HeapLessString<32>>() + size_of::<HeapLessString<256>>();
+        assert_eq!(Row::max_size(), total);
+    }
+}
