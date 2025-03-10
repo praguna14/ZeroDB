@@ -1,9 +1,8 @@
 mod types;
 
+use crate::types::{MetaCommand, PrepareResult, Statement, VirtualMachine};
 use anyhow::{ Result};
 use std::io::{self, Write};
-use types::{Statement, PrepareResult};
-use crate::types::{MetaCommand, VirtualMachine};
 
 #[allow(unreachable_code)]
 fn main() -> Result<()> {
